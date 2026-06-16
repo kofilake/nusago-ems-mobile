@@ -1,16 +1,12 @@
 // lib/features/auth/data/datasources/auth_remote_data_source.dart
 
 import 'package:dio/dio.dart';
-import 'package:dartz/dartz.dart';
 import '/core/network/dio_client.dart';
 import '/core/network/api_endpoints.dart';
 import '/core/error/failure.dart';
-import '/core/network/dio_client.dart';
-import '/core/network/api_endpoints.dart';
 
 class AuthRemoteDataSource {
   final DioClient dioClient;
-
 
   AuthRemoteDataSource({required this.dioClient});
 
@@ -26,6 +22,7 @@ class AuthRemoteDataSource {
       if (response.statusCode == 200) {
         // Assuming Laravel returns a token like {'access_token'}
         final String token = response.data['access_token'] as String;
+        DioClient().updateToken(token);
         return token; // Return the raw token string
       } else {
         throw ServerFailure('Login failed with status ${response.statusCode}');
@@ -43,9 +40,6 @@ class AuthRemoteDataSource {
   }
 
   Future<void> logout(String token) async {
-    await dioClient.post(
-      ApiEndpoints.logoutEnd, 
-      data: {}
-    );
+    await dioClient.post(ApiEndpoints.logoutEnd, data: {});
   }
 }
