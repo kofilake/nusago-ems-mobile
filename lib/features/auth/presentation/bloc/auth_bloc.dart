@@ -9,6 +9,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required this.authRepository}) : super(LoginInitial()) {
     on<LoginRequested>(_onLoginRequested);
+    on<LogoutRequested>(_onLogoutRequested);
   }
 
   Future<void> _onLoginRequested(
@@ -38,5 +39,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // Catch unexpected exceptions
       emit(LoginFailure(ServerFailure('Login Failed')));
     }
+  }
+
+  Future<void> _onLogoutRequested(
+    LogoutRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    await authRepository.logout();
   }
 }

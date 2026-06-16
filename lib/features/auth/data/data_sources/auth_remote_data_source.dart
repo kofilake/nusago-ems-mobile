@@ -1,12 +1,16 @@
 // lib/features/auth/data/datasources/auth_remote_data_source.dart
 
 import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
 import '/core/network/dio_client.dart';
 import '/core/network/api_endpoints.dart';
 import '/core/error/failure.dart';
+import '/core/network/dio_client.dart';
+import '/core/network/api_endpoints.dart';
 
 class AuthRemoteDataSource {
   final DioClient dioClient;
+
 
   AuthRemoteDataSource({required this.dioClient});
 
@@ -38,5 +42,10 @@ class AuthRemoteDataSource {
     }
   }
 
-  // Add methods for register and logout here...
+  Future<void> logout(String token) async {
+    await dioClient.post(
+      ApiEndpoints.logoutEnd, 
+      data: {}
+    );
+  }
 }
