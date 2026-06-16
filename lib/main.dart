@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
         final finalTheme = materialThemeInstance.light();
 
         return MaterialApp(
-          title: 'NusaGo Auth Demo',
-          theme: finalTheme,
-          home: const LoginPage(), // Start directly on the login page
           debugShowCheckedModeBanner: false,
+          title: 'NusaGo EMS',
+          theme: finalTheme,
+          home: const LoginPage(),
         );
       },
     );
