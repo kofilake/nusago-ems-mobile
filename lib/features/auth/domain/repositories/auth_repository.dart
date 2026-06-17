@@ -9,5 +9,7 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<Either<Failure, void>> checkLoggedIn();
+
   Future<Either<Failure, void>> logout();
 }
