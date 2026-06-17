@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nusago_ems/features/auth/presentation/widgets/login_form_widget.dart';
-import 'package:nusago_ems/features/employees/presentation/pages/employee_page.dart';
-import 'package:nusago_ems/injection_container.dart';
-import '../../../../core/error/failure.dart';
-import '../../domain/repositories/auth_repository.dart';
 import '../bloc/auth_bloc.dart';
-import '../bloc/login_event.dart';
-import '../bloc/login_state.dart';
 import '/core/theme/app_theme.dart';
 
 class LoginPage extends StatelessWidget {
@@ -15,10 +9,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(authRepository: sl<AuthRepository>()),
-      child: const LoginView(),
-    );
+    return const LoginView();
   }
 }
 
@@ -65,7 +56,7 @@ class _LoginPageState extends State<LoginView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        // 1. Header Section (Logo/Title)
+                        // Header Section (Logo/Title)
                         const Text(
                           'NusaGo EMS',
                           style: TextStyle(
