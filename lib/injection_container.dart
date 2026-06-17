@@ -10,7 +10,6 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/data/data_sources/auth_remote_data_source.dart';
-
 import 'core/network/dio_client.dart';
 
 final sl = GetIt.instance;
