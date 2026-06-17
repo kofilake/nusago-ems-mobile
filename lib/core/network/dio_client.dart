@@ -6,20 +6,7 @@ import 'package:nusago_ems/core/network/api_endpoints.dart';
 class DioClient {
   final Dio _dio;
   String? _token;
-  /*
-  DioClient()
-    : _dio = Dio(
-        BaseOptions(
-          baseUrl: ApiEndpoints
-              .baseUrl, // Use the base URL defined in your endpoints file
-          contentType: 'application/json',
-          headers: {
-            'Accept': 'application/json',
-            // We will add Authorization header dynamically via interceptor
-          },
-        ),
-      );
-  */
+  
   static final DioClient _instance = DioClient._internal();
   DioClient._internal()
     : _dio = Dio(BaseOptions(baseUrl: ApiEndpoints.baseUrl)) {
@@ -34,7 +21,7 @@ class DioClient {
     _token = newToken;
   }
 
-  /// Adds an Interceptor to automatically attach the Bearer token.
+  // Adds an Interceptor to automatically attach the Bearer token.
   void setupInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(
@@ -53,7 +40,7 @@ class DioClient {
                 statusCode: 422,
               );
             }
-            return handler.next(e); // Re-throw the exception for BLoC to catch
+            return handler.next(e);
           }
         },
       ),
@@ -61,59 +48,27 @@ class DioClient {
   }
 
   // --- Core Request Methods ---
-
-  Future<Response> get(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    final options = Options(
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-      },
-    );
-    return await _dio.get(
-      path,
-      options: options,
-      queryParameters: queryParameters,
-    );
+  Future<Response> get(String path, {Map<String, dynamic>? queryParameters, Options? options}) async {
+    final requestOptions = options ?? Options();
+    requestOptions.headers = {'Accept': 'application/json', 'Content-type': 'application/json', ...?requestOptions.headers};
+    return await _dio.get(path, options: requestOptions, queryParameters: queryParameters);
   }
 
-  Future<Response> post(
-    String path, {
-    required Map<String, dynamic> data,
-    Options? options,
-  }) async {
-    final options = Options(
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-      },
-    );
-    return await _dio.post(path, data: data, options: options);
+  Future<Response> post(String path, {required Map<String, dynamic> data, Options? options}) async {
+    final requestOptions = options ?? Options();
+    requestOptions.headers = {'Accept': 'application/json', 'Content-type': 'application/json', ...?requestOptions.headers};
+    return await _dio.post(path, data: data, options: requestOptions);
   }
 
-  Future<Response> put(
-    String path, {
-    required Map<String, dynamic> data,
-    Options? options,
-  }) async {
-    final options = Options(
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-      },
-    );
-    return await _dio.put(path, data: data, options: options);
+  Future<Response> put(String path, {required Map<String, dynamic> data, Options? options}) async {
+    final requestOptions = options ?? Options();
+    requestOptions.headers = {'Accept': 'application/json', 'Content-type': 'application/json', ...?requestOptions.headers};
+    return await _dio.put(path, data: data, options: requestOptions);
   }
 
   Future<Response> delete(String path, {Options? options}) async {
-    final options = Options(
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-      },
-    );
-    return await _dio.delete(path, options: options);
+    final requestOptions = options ?? Options();
+    requestOptions.headers = {'Accept': 'application/json', 'Content-type': 'application/json', ...?requestOptions.headers};
+    return await _dio.delete(path, options: requestOptions);
   }
 }

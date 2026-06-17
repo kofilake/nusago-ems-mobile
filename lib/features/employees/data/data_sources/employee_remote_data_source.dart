@@ -11,10 +11,8 @@ class EmployeeRemoteDataSource {
 
   Future<List<EmployeeModel>> getEmployees() async {
     try {
-      // Assuming ApiEndpoints.employees is defined in your core/network/api_endpoints.dart
       final response = await dioClient.get(ApiEndpoints.employeesListEnd); 
       
-      // Laravel often wraps lists in a 'data' object. If it's a raw array, adjust to: (response.data as List)
       final List<dynamic> data = response.data as List; 
       
       return data.map((json) => EmployeeModel.fromJson(json)).toList();
