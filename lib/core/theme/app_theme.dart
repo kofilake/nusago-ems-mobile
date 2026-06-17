@@ -7,8 +7,10 @@ class MaterialTheme {
 
   static const Color textPrimary = Color(0xFF222222);
   static const Color textSecondary = Color(0xCC757575);
+  static const Color textSecondaryBlacker = Color(0xCC575757);
   static const Color textHint = Color.fromARGB(204, 128, 128, 128);
   static const Color textRedirect = Colors.lightBlue;
+  static const Color textWhite = Color(0xFFFFFFFF);
   static const Color borderColor = Color(0xCC222222);
   static const Color inputFill = Color(0xFFF4F5F7);
   static const Color primaryRed = Color(0xFFC8102E);
