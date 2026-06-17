@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nusago_ems/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:nusago_ems/features/auth/presentation/bloc/login_event.dart';
 import 'injection_container.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 import '/core/theme/app_theme.dart';
@@ -6,7 +9,7 @@ import '/core/theme/util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await init(); // Initialize dependencies first!
+  await init(); // Initialize dependencies CRUCIAL.
   runApp(const MyApp());
 }
 
@@ -15,30 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        const String bodyFont = 'Roboto';
-        const String displayFont = 'Roboto';
+    const String bodyFont = 'Roboto';
+    const String displayFont = 'Roboto';
 
-        final customTheme = createTextTheme(context, bodyFont, displayFont);
-        final materialThemeInstance = MaterialTheme(customTheme);
-        final finalTheme = materialThemeInstance.light();
-
-        return MaterialApp(
-          title: 'NusaGo Auth Demo',
-          theme: finalTheme,
-          home: const LoginPage(), // Start directly on the login page
+    final customTheme = createTextTheme(context, bodyFont, displayFont);
+    final materialThemeInstance = MaterialTheme(customTheme);
+    final finalTheme = materialThemeInstance.light();
+    return BlocProvider(
+      create: (_) => sl<AuthBloc>()..add(CheckRequested()),
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
-        );
-      },
+          title: 'NusaGo EMS',
+          theme: finalTheme,
+          home: const LoginPage(),
+        )
     );
-    /*
-    MaterialApp(
-      title: 'NusaGo Auth Demo',
-      theme: ThemeData(),
-      home: const LoginPage(), // Start directly on the login page
-      debugShowCheckedModeBanner: false,
-    );
-    */
   }
 }

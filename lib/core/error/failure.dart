@@ -7,7 +7,7 @@ abstract class Failure extends Equatable {
   @override
   List<Object> get props => [message];
 }
-// ------ Specific Failures -------
+// Specific Failures
 class ServerFailure extends Failure {
   final int? statusCode;
   const ServerFailure(super.message, {this.statusCode});

@@ -21,6 +21,8 @@ class LoginSuccess extends AuthState {
   List<Object> get props => [token];
 }
 
+class AuthUnauthenticated extends AuthState {}
+
 class LoginFailure extends AuthState {
   final Failure failure;
   const LoginFailure(this.failure) : super();
