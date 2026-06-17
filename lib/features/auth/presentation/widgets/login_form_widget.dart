@@ -18,7 +18,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool passwordVisibility = false;
-  bool forgetMeNot = false;
+  bool forgetMeNot = true;
 
   @override
   void dispose() {
@@ -52,7 +52,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // 1. Email Input
         BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is LoginFailure) {
@@ -102,7 +101,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
         const SizedBox(height: 25),
 
-        // 3. Password Field (with toggle)
+        // Password Field (with toggle)
         BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -163,7 +162,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
         const SizedBox(height: 20),
 
-        // 4. Remember Me & Forgot Password Row
+        // Remember Me & Forgot Password Row
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -194,7 +193,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
         const SizedBox(height: 30),
 
-        // 5. Login Button
+        // Login Button
         BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
@@ -244,7 +243,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
         const SizedBox(height: 40),
 
-        // 6. Footer/Help Section
+        // Footer/Help Section
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

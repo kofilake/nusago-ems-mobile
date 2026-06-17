@@ -8,8 +8,6 @@ class Employee extends Equatable {
   final String address;
   final String position;
   final String department;
-  // We'll use a local check for status since your DB doesn't have an explicit 'status' column, 
-  // or we can default it to active for the UI mockup.
 
   const Employee({
     required this.id,

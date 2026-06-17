@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nusago_ems/features/auth/presentation/bloc/login_state.dart';
+import 'package:nusago_ems/features/auth/presentation/pages/login_page.dart';
+import 'package:nusago_ems/features/employees/presentation/bloc/employee_list_event.dart';
+import 'package:nusago_ems/features/employees/presentation/bloc/employee_list_state.dart';
 import '../../../../injection_container.dart'; // Ensure this points to your GetIt 'sl' instance
 import '../bloc/employee_list_bloc.dart';
-import '../../../auth/presentation/bloc/auth_bloc.dart'; 
-import '../../../auth/presentation/bloc/login_event.dart'; 
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/login_event.dart';
 import '../widgets/employee_card.dart';
+import '/core/theme/app_theme.dart';
 
-// --- 1. THE WRAPPER (Injects the BLoC) ---
 class EmployeeListPage extends StatelessWidget {
   const EmployeeListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      // We grab the registered BLoC from GetIt
-      create: (_) => sl<EmployeeListBloc>(), 
+      create: (_) => sl<EmployeeListBloc>(),
       child: const EmployeeListView(),
     );
   }
 }
 
-// --- 2. THE VIEW (Consumes the BLoC) ---
 class EmployeeListView extends StatefulWidget {
   const EmployeeListView({super.key});
 
@@ -34,7 +36,6 @@ class _EmployeeListViewState extends State<EmployeeListView> {
   @override
   void initState() {
     super.initState();
-    // Now this is perfectly safe because EmployeeListPage provided the BLoC!
     context.read<EmployeeListBloc>().add(FetchEmployees());
   }
 
@@ -46,36 +47,45 @@ class _EmployeeListViewState extends State<EmployeeListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false, // Removes the back arrow
-        backgroundColor: Colors.red[700], // NusaGo Red
-        title: const Text('NusaGo EMS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.white),
-            onPressed: () {
-              // Triggers your authentication BLoC logout flow
-              context.read<AuthBloc>().add(LogoutRequested());
-            },
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthUnauthenticated) {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+            (Route<dynamic> route) => false,
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: MaterialTheme.primaryRed,
+          title: const Text(
+            'NusaGo EMS',
+            style: TextStyle(color: MaterialTheme.textWhite, fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      body: _selectedIndex == 0 ? _buildDirectoryTab() : _buildProfileTab(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.red[700],
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Directory',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout, color: MaterialTheme.backgroundColor),
+              onPressed: () {
+                context.read<AuthBloc>().add(LogoutRequested());
+              },
+            ),
+          ],
+        ),
+        body: _selectedIndex == 0 ? _buildDirectoryTab() : _buildProfileTab(),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          selectedItemColor: MaterialTheme.primaryRed,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              label: 'Directory',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ],
+        ),
       ),
     );
   }
@@ -90,12 +100,13 @@ class _EmployeeListViewState extends State<EmployeeListView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(state.message, style: const TextStyle(color: Colors.red)),
+                Text(state.message, style: const TextStyle(color: MaterialTheme.primaryRed)),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () => context.read<EmployeeListBloc>().add(FetchEmployees()),
+                  onPressed: () =>
+                      context.read<EmployeeListBloc>().add(FetchEmployees()),
                   child: const Text('Retry'),
-                )
+                ),
               ],
             ),
           );

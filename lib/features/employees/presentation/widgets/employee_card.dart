@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nusago_ems/features/employees/presentation/pages/employee_detail_page.dart';
 import '../../domain/entities/employee_entity.dart';
+import '/core/theme/app_theme.dart';
 
 class EmployeeCard extends StatelessWidget {
   final Employee employee;
@@ -13,7 +15,7 @@ class EmployeeCard extends StatelessWidget {
       List<String> names = name.split(" ");
       String initials = "";
       int numWords = names.length > 2 ? 2 : names.length;
-      for(int i = 0; i < numWords; i++){
+      for (int i = 0; i < numWords; i++) {
         initials += names[i][0];
       }
       return initials.toUpperCase();
@@ -33,7 +35,10 @@ class EmployeeCard extends StatelessWidget {
           backgroundColor: Colors.red.shade50,
           child: Text(
             getInitials(employee.name),
-            style: TextStyle(color: Colors.red[700], fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: MaterialTheme.primaryRed,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         title: Text(
@@ -44,22 +49,27 @@ class EmployeeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 4),
-            Text(employee.position, style: TextStyle(color: Colors.grey[700])),
+            Text(employee.position, style: TextStyle(color: MaterialTheme.textSecondary)),
             const SizedBox(height: 4),
             Text(
               employee.department.toUpperCase(),
               style: TextStyle(
-                color: Colors.brown[700], 
-                fontWeight: FontWeight.bold, 
+                color: MaterialTheme.textSecondaryBlacker,
+                fontWeight: FontWeight.bold,
                 fontSize: 10,
-                letterSpacing: 1.2
+                letterSpacing: 1.2,
               ),
             ),
           ],
         ),
-        trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+        trailing: const Icon(Icons.chevron_right, color: MaterialTheme.iconGrey),
         onTap: () {
-          // TODO: Navigate to Employee Detail Page
+          Navigator.push(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => EmployeeDetailPage(employee: employee)
+            )
+          );
         },
       ),
     );
