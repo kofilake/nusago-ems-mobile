@@ -1,30 +1,21 @@
 import 'package:dartz/dartz.dart';
+import 'package:nusago_ems/features/auth/data/data_sources/auth_remote_data_source.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../../../core/error/failure.dart';
 
 /// Concrete implementation of the AuthRepository contract.
 class AuthRepositoryImpl implements AuthRepository {
-  // In a real app, this class would coordinate calls to RemoteDataSource (API) 
-  // and LocalDataSource (Cache). Here, we simulate it.
+  final AuthRemoteDataSource remoteDataSource;
+
+  AuthRepositoryImpl({required this.remoteDataSource});
+
   @override
   Future<Either<Failure, String>> loginWithCredentials({
     required String email,
     required String password,
   }) async {
-    // --- SIMULATION START ---
-    await Future.delayed(const Duration(milliseconds: 800)); // Simulate network delay
-
-    if (email == 'admin@example.com' && password == 'password') {
-      // Success simulation
-      return const Right('auth_token_12345');
-    } else if (email == 'user@example.com' && password == 'password') {
-       // Another success path for testing different roles
-      return const Right('auth_token_67890');
-    } else {
-      // Failure simulation
-      return const Left(ServerFailure('Invalid email or password.', statusCode: 401));
-    }
-    // --- SIMULATION END ---
+    final token = await remoteDataSource.loginWithCredentials(email, password);
+    return Right(token);
   }
 
   @override
