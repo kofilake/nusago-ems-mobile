@@ -23,8 +23,9 @@ class EmployeeCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
+      color: MaterialTheme.backgroundColorCard,
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.red.shade100, width: 1),
+        side: BorderSide(color: MaterialTheme.primaryRedBorder, width: 1),
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(bottom: 12),
@@ -32,12 +33,13 @@ class EmployeeCard extends StatelessWidget {
         contentPadding: const EdgeInsets.all(12),
         leading: CircleAvatar(
           radius: 25,
-          backgroundColor: Colors.red.shade50,
+          backgroundColor: MaterialTheme.primaryRedShade,
           child: Text(
             getInitials(employee.name),
             style: TextStyle(
               color: MaterialTheme.primaryRed,
               fontWeight: FontWeight.bold,
+              fontSize: 18,
             ),
           ),
         ),
@@ -49,7 +51,10 @@ class EmployeeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 4),
-            Text(employee.position, style: TextStyle(color: MaterialTheme.textSecondary)),
+            Text(
+              employee.position,
+              style: TextStyle(color: MaterialTheme.textSecondary),
+            ),
             const SizedBox(height: 4),
             Text(
               employee.department.toUpperCase(),
@@ -62,13 +67,16 @@ class EmployeeCard extends StatelessWidget {
             ),
           ],
         ),
-        trailing: const Icon(Icons.chevron_right, color: MaterialTheme.iconGrey),
+        trailing: const Icon(
+          Icons.chevron_right,
+          color: MaterialTheme.iconGrey,
+        ),
         onTap: () {
           Navigator.push(
-            context, 
+            context,
             MaterialPageRoute(
-              builder: (context) => EmployeeDetailPage(employee: employee)
-            )
+              builder: (context) => EmployeeDetailPage(employee: employee),
+            ),
           );
         },
       ),
