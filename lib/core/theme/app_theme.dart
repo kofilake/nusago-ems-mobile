@@ -14,7 +14,10 @@ class MaterialTheme {
   static const Color borderColor = Color(0xCC222222);
   static const Color inputFill = Color(0xFFF4F5F7);
   static const Color primaryRed = Color(0xFFC8102E);
+  static const Color primaryRedShade = Color(0xFFFCDEE3);
+  static const Color primaryRedBorder = Color.fromARGB(255, 253, 179, 191);
   static const Color backgroundColor = Color(0xFFFFFFFF);
+  static const Color backgroundColorCard = Color.fromARGB(255, 255, 255, 255);
   static const Color iconGrey = Colors.grey;
   static const Color errorColor = Color(0xFFFF0000);
 

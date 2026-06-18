@@ -62,11 +62,17 @@ class _EmployeeListViewState extends State<EmployeeListView> {
           backgroundColor: MaterialTheme.primaryRed,
           title: const Text(
             'NusaGo EMS',
-            style: TextStyle(color: MaterialTheme.textWhite, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: MaterialTheme.textWhite,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout, color: MaterialTheme.backgroundColor),
+              icon: const Icon(
+                Icons.logout,
+                color: MaterialTheme.backgroundColor,
+              ),
               onPressed: () {
                 context.read<AuthBloc>().add(LogoutRequested());
               },
@@ -100,7 +106,10 @@ class _EmployeeListViewState extends State<EmployeeListView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(state.message, style: const TextStyle(color: MaterialTheme.primaryRed)),
+                Text(
+                  state.message,
+                  style: const TextStyle(color: MaterialTheme.primaryRed),
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () =>
@@ -131,6 +140,6 @@ class _EmployeeListViewState extends State<EmployeeListView> {
   }
 
   Widget _buildProfileTab() {
-    return const Center(child: Text('Personal Profile View (Read-Only)'));
+    return const Center(child: Text('Personal Profile View'));
   }
 }
