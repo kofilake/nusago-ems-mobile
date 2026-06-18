@@ -26,7 +26,7 @@ This project uses local IP for the endpoint URL. You need to configure them befo
 2. Open ```api_endpoint.dart``` and change the baseUrl to your backend URL:
 ```bash
 class ApiEndpoints {
-  static const String baseUrl = '<YOUR_BACKEND_URL>';   //example: http://api.nusago.com/api
+  static const String baseUrl = '<YOUR_BACKEND_URL>';  #example: http://api.nusago.com/api
 
   static const String loginEnd = '$baseUrl/login';
   static const String registerEnd = '$baseUrl/register';
