@@ -140,6 +140,71 @@ class _EmployeeListViewState extends State<EmployeeListView> {
   }
 
   Widget _buildProfileTab() {
-    return const Center(child: Text('Personal Profile View'));
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 32),
+          // Avatar Placeholder
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: MaterialTheme.primaryRedBorder,
+            child: const Icon(Icons.person, size: 60, color: MaterialTheme.primaryRed),
+          ),
+          const SizedBox(height: 32),
+          
+          // Details Placeholder
+          const Card(
+            elevation: 0,
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(Icons.badge, color: MaterialTheme.iconGrey),
+                  title: Text('Name', style: TextStyle(fontSize: 12, color: MaterialTheme.textSecondary)),
+                  subtitle: Text('User Mobile', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: MaterialTheme.textPrimary)),
+                ),
+                Divider(height: 1),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(Icons.email, color: MaterialTheme.iconGrey),
+                  title: Text('Email', style: TextStyle(fontSize: 12, color: MaterialTheme.textSecondary)),
+                  subtitle: Text('usermobile@nusago.com', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: MaterialTheme.textPrimary)),
+                ),
+                Divider(height: 1),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(Icons.work, color: MaterialTheme.iconGrey),
+                  title: Text('Role', style: TextStyle(fontSize: 12, color: MaterialTheme.textSecondary)),
+                  subtitle: Text('IT', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: MaterialTheme.textPrimary)),
+                ),
+              ],
+            ),
+          ),
+          
+          const Spacer(),
+        
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () {
+                context.read<AuthBloc>().add(LogoutRequested());
+              },
+              icon: const Icon(Icons.logout, color: Colors.red),
+              label: const Text('Logout', style: TextStyle(color: Colors.red)),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Colors.red),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
   }
 }
